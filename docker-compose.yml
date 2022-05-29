@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  wolf_database:
+    image: mongo:5.0.8
+    container_name: wolf_database
+    env_file: .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DATABASE_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DATABASE_NAME}
+    ports:
+      - ${DATABASE_PORT}:${DATABASE_PORT}
+    volumes:
+      - ./.docker/mongodb/data/db:/data/db
+      - ./.docker/mongodb/data/log:/var/log/mongodb
+
+  wolf_api:
+    container_name: wolf_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sh -c "yarn install && yarn start:debug"
+    env_file: .env
+    environment:
+      WAIT_HOSTS: wolf_database:${DATABASE_PORT}
+    ports:
+      - ${API_PORT}:${API_PORT}
+    volumes:
+      - .:/app
+      - /app/node_modules
