@@ -1,5 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { BadRequestException, ValidationError, ValidationPipe } from '@nestjs/common';
+import {
+  BadRequestException,
+  ValidationError,
+  ValidationPipe,
+} from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
