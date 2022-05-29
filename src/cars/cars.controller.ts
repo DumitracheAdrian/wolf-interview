@@ -33,7 +33,9 @@ export class CarsController {
     response.setHeader('Content-Type', 'application/pdf');
     response.setHeader('Content-Disposition', `attachment; filename=cars.pdf`);
 
-    const fileStream = createReadStream(join(process.cwd(), 'public/pdf/cars.pdf'));
+    const fileStream = createReadStream(
+      join(process.cwd(), 'public/pdf/cars.pdf'),
+    );
 
     return new StreamableFile(fileStream);
   }
